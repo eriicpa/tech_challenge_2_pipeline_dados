@@ -1,0 +1,23 @@
+# ─────────────────────────────────────────────────────────────
+# Pipeline Híbrida de Alfabetização — dependências
+#
+# Os notebooks rodam no Databricks, onde pyspark, pandas, numpy,
+# scikit-learn e matplotlib já vêm no runtime. Este arquivo serve
+# para rodar os módulos de src/ fora do Databricks: testes locais,
+# leitura de código e a extração dos microdados no BigQuery.
+# ─────────────────────────────────────────────────────────────
+
+# Módulos de src/ e execução local dos notebooks
+pyspark>=3.5
+pandas>=2.0
+numpy>=1.24
+pyarrow>=14.0
+requests>=2.31
+
+# Análise e modelagem — notebook 04
+scikit-learn>=1.3
+matplotlib>=3.7
+
+# Extração dos microdados de aluno (src/ingestion/extrair_bigquery.py)
+google-cloud-bigquery>=3.17
+db-dtypes>=1.2
