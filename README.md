@@ -10,6 +10,7 @@ arquitetura medalhão em Delta Lake, e roda no Databricks.
 
 ## Sumário
 
+- [Estrutura do repositório](#estrutura-do-repositório)
 - [O problema](#o-problema)
 - [Arquitetura](#arquitetura)
 - [Fluxo de dados](#fluxo-de-dados)
@@ -19,10 +20,37 @@ arquitetura medalhão em Delta Lake, e roda no Databricks.
 - [Monitoramento](#monitoramento)
 - [FinOps](#finops)
 - [Uso em IA](#uso-em-ia)
-- [Estrutura do repositório](#estrutura-do-repositório)
 - [Como rodar](#como-rodar)
 - [Resultados da última execução](#resultados-da-última-execução)
 - [Limitações](#limitações)
+
+---
+
+## Estrutura do repositório
+
+```
+tech_challenge_2_pipeline_dados/
+├── apresentacao/
+│   ├── PPT_TECH_CHALLENGE.pdf   slides da apresentação
+│   └── tech_challenge.mp4       vídeo da apresentação
+├── notebooks/
+│   ├── 01_bronze_silver.py      ingestão em lote, Bronze, verificações e Silver
+│   ├── 02_streaming.py          eventos, fila de erro, janelas e upsert idempotente
+│   ├── 03_gold.py               camada analítica, otimização e FinOps
+│   └── 04_analytics.py          desigualdade, predição, clusters e priorização
+├── src/
+│   ├── quality/verificacoes.py  verificações de qualidade em Spark
+│   ├── utils/monitoramento.py   instrumentação gravada em Delta
+│   ├── gold/consultas.py        as oito consultas da Gold, em SQL
+│   └── ingestion/extrair_bigquery.py   extração dos microdados de aluno
+├── data/landing/                arquivos de origem, que vão para o volume
+├── docs/guia_extracao_bigquery.md
+└── requirements.txt
+```
+
+Os notebooks estão salvos como arquivo-fonte do Databricks, que é .py com marcador de célula.
+O formato foi escolhido porque o diff fica legível no Git. Com .ipynb qualquer execução muda o arquivo inteiro
+e o histórico fica inútil.
 
 ---
 
@@ -344,31 +372,6 @@ tabela que dá para consultar.
 - Previsão de trajetória em vez de um ponto só, quando tiver mais ciclos publicados
 - Juntar Censo Escolar e FUNDEB na gold_features_ml, que é o caminho para sair de onde está o
   problema e chegar em por quê
-
----
-
-## Estrutura do repositório
-
-```
-tech_challenge_2_pipeline_dados/
-├── notebooks/
-│   ├── 01_bronze_silver.py      ingestão em lote, Bronze, verificações e Silver
-│   ├── 02_streaming.py          eventos, fila de erro, janelas e upsert idempotente
-│   ├── 03_gold.py               camada analítica, otimização e FinOps
-│   └── 04_analytics.py          desigualdade, predição, clusters e priorização
-├── src/
-│   ├── quality/verificacoes.py  verificações de qualidade em Spark
-│   ├── utils/monitoramento.py   instrumentação gravada em Delta
-│   ├── gold/consultas.py        as oito consultas da Gold, em SQL
-│   └── ingestion/extrair_bigquery.py   extração dos microdados de aluno
-├── data/landing/                arquivos de origem, que vão para o volume
-├── docs/guia_extracao_bigquery.md
-└── requirements.txt
-```
-
-Os notebooks estão salvos como arquivo-fonte do Databricks, que é .py com marcador de célula.
-O formato foi escolhido porque o diff fica legível no Git. Com .ipynb qualquer execução muda o arquivo inteiro
-e o histórico fica inútil.
 
 ---
 
